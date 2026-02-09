@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
+import { useLanguage } from '@/context/LanguageContext';
 import RichTextEditor from './RichTextEditor';
 
 interface CreatePostModalProps {
@@ -11,6 +12,7 @@ interface CreatePostModalProps {
 
 export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProps) {
     const { user } = useAuth();
+    const { t } = useLanguage();
     const [formData, setFormData] = useState({
         title: '',
         content: '',
@@ -38,7 +40,7 @@ export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProp
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!user) {
-            alert('로그인이 필요합니다.');
+            alert(t('post.alert_login'));
             return;
         }
         setLoading(true);
@@ -60,18 +62,18 @@ export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProp
             });
 
             if (res.ok) {
-                alert('게시물이 작성되었습니다.');
+                alert(t('post.alert_success'));
                 onClose();
                 setFormData({ title: '', content: '', category: 'meetup', location: '', tags: '' });
                 setFile(null);
                 // Trigger feed refresh
                 if ((window as any).refreshFeed) (window as any).refreshFeed();
             } else {
-                alert('게시물 작성 실패');
+                alert(t('post.alert_fail'));
             }
         } catch (error) {
             console.error(error);
-            alert('오류가 발생했습니다.');
+            alert(t('post.alert_fail'));
         } finally {
             setLoading(false);
         }
@@ -83,48 +85,48 @@ export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProp
         <div className={`modal-overlay ${isOpen ? 'open' : ''}`} onClick={(e) => e.target === e.currentTarget && onClose()}>
             <div className="modal" style={{ maxWidth: '800px', width: '90%' }}>
                 <button className="modal-close" onClick={onClose}>&times;</button>
-                <h3 className="modal-title">새 게시물 작성</h3>
+                <h3 className="modal-title">{t('post.create_title')}</h3>
 
                 <form onSubmit={handleSubmit}>
                     <div className="input-group">
-                        <label className="input-label">카테고리</label>
+                        <label className="input-label">{t('post.category')}</label>
                         <select name="category" value={formData.category} onChange={handleChange} className="text-input" style={{ backgroundColor: 'white' }}>
-                            <option value="meetup">만남의 장</option>
-                            <option value="qna">지식인</option>
-                            <option value="event">행사 정보</option>
-                            <option value="job">알바 정보</option>
-                            <option value="gallery">여행 갤러리</option>
+                            <option value="meetup">{t('nav.meetup')}</option>
+                            <option value="qna">{t('nav.qna')}</option>
+                            <option value="event">{t('nav.event')}</option>
+                            <option value="job">{t('nav.job')}</option>
+                            <option value="gallery">{t('nav.gallery')}</option>
                         </select>
                     </div>
 
                     <div className="input-group">
-                        <label className="input-label">제목</label>
+                        <label className="input-label">{t('post.title')}</label>
                         <input type="text" name="title" className="text-input" value={formData.title} onChange={handleChange} required />
                     </div>
 
                     <div className="input-group">
-                        <label className="input-label">내용</label>
+                        <label className="input-label">{t('post.content')}</label>
                         {/* <textarea name="content" className="text-input" style={{ height: '100px' }} value={formData.content} onChange={handleChange} required></textarea> */}
                         <RichTextEditor value={formData.content} onChange={handleContentChange} />
                     </div>
 
                     <div className="input-group" style={{ marginTop: '20px' }}>
-                        <label className="input-label">대표 이미지 (썸네일)</label>
+                        <label className="input-label">{t('post.image')}</label>
                         <input type="file" accept="image/*" className="text-input" onChange={handleFileChange} />
                     </div>
 
                     <div className="input-group">
-                        <label className="input-label">위치 (선택)</label>
-                        <input type="text" name="location" className="text-input" placeholder="예: 홍대입구" value={formData.location} onChange={handleChange} />
+                        <label className="input-label">{t('post.location')}</label>
+                        <input type="text" name="location" className="text-input" placeholder={t('post.placeholder_loc')} value={formData.location} onChange={handleChange} />
                     </div>
 
                     <div className="input-group">
-                        <label className="input-label">태그 (콤마로 구분)</label>
-                        <input type="text" name="tags" className="text-input" placeholder="예: 여행, 서울, 맛집" value={formData.tags} onChange={handleChange} />
+                        <label className="input-label">{t('post.tags')}</label>
+                        <input type="text" name="tags" className="text-input" placeholder={t('post.placeholder_tags')} value={formData.tags} onChange={handleChange} />
                     </div>
 
                     <button type="submit" className="btn btn-primary full-width" disabled={loading}>
-                        {loading ? '작성 중...' : '작성 완료'}
+                        {loading ? t('post.submitting') : t('post.submit')}
                     </button>
                 </form>
             </div>
