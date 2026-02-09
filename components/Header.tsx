@@ -15,7 +15,9 @@ export default function Header() {
             <header>
                 <div className="container header-content">
                     <div className="logo">
-                        <h1>{t('header.title')}</h1>
+                        <a href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+                            <h1>TEMAN</h1>
+                        </a>
                         <span>{t('header.subtitle')}</span>
                     </div>
                     <div className="header-actions">
@@ -43,8 +45,10 @@ export default function Header() {
                                         Admin
                                     </a>
                                 )}
-                                <i className="fas fa-user-circle" style={{ fontSize: '1.5rem', color: 'var(--primary-color)' }}></i>
-                                <span style={{ fontWeight: 600 }}>{user.nickname}</span>
+                                <a href="/mypage" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                    <i className="fas fa-user-circle" style={{ fontSize: '1.5rem', color: 'var(--primary-color)' }}></i>
+                                    <span style={{ fontWeight: 600 }}>{user.nickname}</span>
+                                </a>
                                 <button onClick={logout} className="btn btn-outline" style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}>
                                     {t('header.logout')}
                                 </button>
