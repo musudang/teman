@@ -1,1 +1,152 @@
-bbbb
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한국생활 커뮤니티</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <h1>한국생활 커뮤니티</h1>
+                <span>외국인을 위한 한국 생활 정보 공유</span>
+            </div>
+            <div class="header-actions">
+                <div class="lang-switch">
+                    <button class="lang-btn active">한국어</button>
+                    <button class="lang-btn">English</button>
+                </div>
+                <div id="loginButtons">
+                    <button class="btn btn-outline" id="loginBtn">
+                        <i class="fas fa-sign-in-alt"></i> 로그인
+                    </button>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-user-plus"></i> 회원가입
+                    </button>
+                </div>
+                <div id="userDisplay" class="hidden" style="display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-user-circle" style="font-size: 1.5rem; color: var(--primary-color);"></i>
+                    <span style="font-weight: 600;">User</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <div class="container nav-list">
+            <div class="nav-item active"><i class="fas fa-users"></i> 전체</div>
+            <div class="nav-item"><i class="fas fa-user-friends"></i> 만남의 장</div>
+            <div class="nav-item"><i class="fas fa-question-circle"></i> 지식인</div>
+            <div class="nav-item"><i class="fas fa-calendar-alt"></i> 행사 정보</div>
+            <div class="nav-item"><i class="fas fa-briefcase"></i> 알바 정보</div>
+            <div class="nav-item"><i class="fas fa-camera"></i> 여행 갤러리</div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="content-header">
+            <h2>13 개의 게시물</h2>
+            <button class="btn btn-primary">
+                <i class="fas fa-plus"></i> 새 게시물 작성
+            </button>
+        </div>
+
+        <!-- Post 1 -->
+        <article class="post-card">
+            <div class="post-header">
+                <span class="tag">만남</span>
+                <span class="location"><i class="fas fa-map-marker-alt"></i> 홍대입구</span>
+            </div>
+            <h3 class="post-title">홍대에서 언어 교환 모임 하실 분!</h3>
+            <p class="post-excerpt">매주 토요일 저녁 7시에 홍대 카페에서 한국어-영어 언어 교환 모임을 합니다. 편한 분위기에서 친구도 사귀고 언어 실력도 향상시켜요!</p>
+            <div class="post-tags">
+                <span class="hashtag">#언어교환</span>
+                <span class="hashtag">#홍대</span>
+                <span class="hashtag">#친구</span>
+            </div>
+            <div class="post-footer">
+                <div class="author-info">
+                    <i class="far fa-clock"></i> 2시간 전
+                    <span class="author-name">Sarah Kim</span>
+                </div>
+                <div class="post-stats">
+                    <span><i class="far fa-heart"></i> 24</span>
+                    <span><i class="far fa-comment"></i> 8</span>
+                </div>
+            </div>
+        </article>
+
+        <!-- Post 2 -->
+        <article class="post-card">
+            <div class="post-header">
+                <span class="tag" style="background-color: #fce7f3; color: #db2777;">갤러리</span>
+                <span class="location"><i class="fas fa-map-marker-alt"></i> 남산타워</span>
+            </div>
+            <h3 class="post-title">서울 야경이 너무 아름다웠어요! 🌃</h3>
+            <div
+                style="background-color: #e5e7eb; height: 200px; border-radius: 0.5rem; margin-bottom: 1rem; overflow: hidden;">
+                <img src="https://images.unsplash.com/photo-1538485399081-7191377e8241?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                    alt="Seoul Night View" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <p class="post-excerpt">남산 타워에서 본 서울의 야경입니다. 정말 환상적이었어요! 저녁 8시쯤 가면 가장 예쁜 것 같아요.</p>
+            <div class="post-footer">
+                <div class="author-info">
+                    <i class="far fa-clock"></i> 5시간 전
+                    <span class="author-name">Mike Chen</span>
+                </div>
+                <div class="post-stats">
+                    <span><i class="far fa-heart"></i> 56</span>
+                    <span><i class="far fa-comment"></i> 12</span>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <h3 class="modal-title">로그인</h3>
+
+            <div id="step1">
+                <div class="input-group">
+                    <label class="input-label">휴대폰 번호</label>
+                    <div class="phone-input-container">
+                        <select class="country-code">
+                            <option value="+82">🇰🇷 +82</option>
+                            <option value="+1">🇺🇸 +1</option>
+                            <option value="+86">🇨🇳 +86</option>
+                            <option value="+81">🇯🇵 +81</option>
+                        </select>
+                        <input type="tel" id="phoneInput" class="text-input" placeholder="01012345678">
+                    </div>
+                </div>
+                <button class="btn btn-primary full-width" id="sendCodeBtn">인증번호 받기</button>
+            </div>
+
+            <div id="verificationSection" class="hidden">
+                <div class="input-group">
+                    <label class="input-label">인증번호</label>
+                    <input type="text" id="codeInput" class="text-input" placeholder="123456">
+                    <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                        문자로 발송된 6자리 인증번호를 입력하세요.
+                    </p>
+                </div>
+                <button class="btn btn-primary full-width" id="verifyBtn">로그인</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
