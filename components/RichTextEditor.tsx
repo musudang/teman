@@ -1,8 +1,16 @@
-'use client';
-
 import dynamic from 'next/dynamic';
 import { useMemo } from 'react';
 import 'react-quill-new/dist/quill.snow.css';
+
+// Compatibility check for React 19 which removed findDOMNode
+if (typeof window !== 'undefined') {
+    const ReactDOM = require('react-dom');
+    if (!ReactDOM.findDOMNode) {
+        ReactDOM.findDOMNode = (component: any) => {
+            return component instanceof HTMLElement ? component : (component && component.current) || null;
+        };
+    }
+}
 
 // Dynamic import to avoid SSR issues
 const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
