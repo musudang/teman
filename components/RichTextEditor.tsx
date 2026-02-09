@@ -4,17 +4,8 @@ import dynamic from 'next/dynamic';
 import { useMemo } from 'react';
 import 'react-quill/dist/quill.snow.css';
 
-// Dynamic import to avoid SSR issues and potential findDOMNode issues with strict mode
-const ReactQuill = dynamic(
-    async () => {
-        const { default: RQ } = await import('react-quill');
-        // Simple wrapper to forward ref if needed, but mainly ensuring client-side
-        return function ForwardRefQuill({ forwardedRef, ...props }: any) {
-            return <RQ ref={forwardedRef} {...props} />;
-        };
-    },
-    { ssr: false }
-);
+// Dynamic import to avoid SSR issues
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 interface RichTextEditorProps {
     value: string;
