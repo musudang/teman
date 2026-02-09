@@ -38,8 +38,6 @@ export default function Feed({ category }: FeedProps) {
 
     if (loading) return <div>Loading...</div>;
 
-    if (posts.length === 0) return <div>{t('feed.empty')}</div>;
-
     return (
         <>
             <div className="content-header">
@@ -49,9 +47,13 @@ export default function Feed({ category }: FeedProps) {
                 </button>
             </div>
 
-            {posts.map((post) => (
-                <PostCard key={post.id} post={post} />
-            ))}
+            {posts.length === 0 ? (
+                <div>{t('feed.empty')}</div>
+            ) : (
+                posts.map((post) => (
+                    <PostCard key={post.id} post={post} />
+                ))
+            )}
         </>
     );
 }

@@ -38,6 +38,11 @@ export default function Header() {
                             <div>Loading...</div>
                         ) : user ? (
                             <div id="userDisplay" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                {user.role === 'ADMIN' && (
+                                    <a href="/admin" className="btn btn-outline" style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', marginRight: '0.5rem' }}>
+                                        Admin
+                                    </a>
+                                )}
                                 <i className="fas fa-user-circle" style={{ fontSize: '1.5rem', color: 'var(--primary-color)' }}></i>
                                 <span style={{ fontWeight: 600 }}>{user.nickname}</span>
                                 <button onClick={logout} className="btn btn-outline" style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}>

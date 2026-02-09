@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
+import RichTextEditor from './RichTextEditor';
 
 interface CreatePostModalProps {
     isOpen: boolean;
@@ -22,6 +23,10 @@ export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProp
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleContentChange = (content: string) => {
+        setFormData({ ...formData, content });
     };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,7 +81,7 @@ export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProp
 
     return (
         <div className={`modal-overlay ${isOpen ? 'open' : ''}`} onClick={(e) => e.target === e.currentTarget && onClose()}>
-            <div className="modal">
+            <div className="modal" style={{ maxWidth: '800px', width: '90%' }}>
                 <button className="modal-close" onClick={onClose}>&times;</button>
                 <h3 className="modal-title">새 게시물 작성</h3>
 
@@ -99,11 +104,12 @@ export default function CreatePostModal({ isOpen, onClose }: CreatePostModalProp
 
                     <div className="input-group">
                         <label className="input-label">내용</label>
-                        <textarea name="content" className="text-input" style={{ height: '100px' }} value={formData.content} onChange={handleChange} required></textarea>
+                        {/* <textarea name="content" className="text-input" style={{ height: '100px' }} value={formData.content} onChange={handleChange} required></textarea> */}
+                        <RichTextEditor value={formData.content} onChange={handleContentChange} />
                     </div>
 
-                    <div className="input-group">
-                        <label className="input-label">사진 첨부</label>
+                    <div className="input-group" style={{ marginTop: '20px' }}>
+                        <label className="input-label">대표 이미지 (썸네일)</label>
                         <input type="file" accept="image/*" className="text-input" onChange={handleFileChange} />
                     </div>
 

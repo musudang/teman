@@ -34,6 +34,7 @@ export async function GET() {
                 age: true,
                 gender: true,
                 profileImage: true,
+                role: true,
             } as any,
         });
 

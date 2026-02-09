@@ -157,6 +157,25 @@ export default function PostCard({ post }: PostProps) {
                             쪽지 보내기
                         </a>
                     )}
+                    {user && (user.id === post.author.id || user.role === 'ADMIN') && (
+                        <button
+                            onClick={async () => {
+                                if (confirm('게시물을 삭제하시겠습니까?')) {
+                                    const res = await fetch(`/api/posts/${post.id}`, { method: 'DELETE' });
+                                    if (res.ok) {
+                                        alert('게시물이 삭제되었습니다.');
+                                        if ((window as any).refreshFeed) (window as any).refreshFeed();
+                                    } else {
+                                        alert('삭제 실패');
+                                    }
+                                }
+                            }}
+                            className="btn btn-outline"
+                            style={{ marginLeft: '0.5rem', padding: '0.1rem 0.5rem', fontSize: '0.75rem', borderColor: 'red', color: 'red' }}
+                        >
+                            삭제
+                        </button>
+                    )}
                 </div>
                 <div className="post-stats">
                     <span onClick={handleLike} style={{ cursor: 'pointer', color: liked ? 'red' : 'inherit' }}>

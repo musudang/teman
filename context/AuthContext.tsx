@@ -11,6 +11,7 @@ interface User {
     age: number | null;
     gender: string | null;
     profileImage: string | null;
+    role: string; // USER, ADMIN
 }
 
 interface AuthContextType {
