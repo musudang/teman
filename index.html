@@ -41,12 +41,12 @@
     <!-- Navigation -->
     <nav class="nav-bar">
         <div class="container nav-list">
-            <div class="nav-item active"><i class="fas fa-users"></i> 전체</div>
-            <div class="nav-item"><i class="fas fa-user-friends"></i> 만남의 장</div>
-            <div class="nav-item"><i class="fas fa-question-circle"></i> 지식인</div>
-            <div class="nav-item"><i class="fas fa-calendar-alt"></i> 행사 정보</div>
-            <div class="nav-item"><i class="fas fa-briefcase"></i> 알바 정보</div>
-            <div class="nav-item"><i class="fas fa-camera"></i> 여행 갤러리</div>
+            <div class="nav-item active" data-category="all"><i class="fas fa-users"></i> 전체</div>
+            <div class="nav-item" data-category="meetup"><i class="fas fa-user-friends"></i> 만남의 장</div>
+            <div class="nav-item" data-category="qna"><i class="fas fa-question-circle"></i> 지식인</div>
+            <div class="nav-item" data-category="event"><i class="fas fa-calendar-alt"></i> 행사 정보</div>
+            <div class="nav-item" data-category="job"><i class="fas fa-briefcase"></i> 알바 정보</div>
+            <div class="nav-item" data-category="gallery"><i class="fas fa-camera"></i> 여행 갤러리</div>
         </div>
     </nav>
 
@@ -60,7 +60,7 @@
         </div>
 
         <!-- Post 1 -->
-        <article class="post-card">
+        <article class="post-card" data-category="meetup">
             <div class="post-header">
                 <span class="tag">만남</span>
                 <span class="location"><i class="fas fa-map-marker-alt"></i> 홍대입구</span>
@@ -85,7 +85,7 @@
         </article>
 
         <!-- Post 2 -->
-        <article class="post-card">
+        <article class="post-card" data-category="gallery">
             <div class="post-header">
                 <span class="tag" style="background-color: #fce7f3; color: #db2777;">갤러리</span>
                 <span class="location"><i class="fas fa-map-marker-alt"></i> 남산타워</span>

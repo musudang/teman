@@ -80,4 +80,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
         alert('로그인되었습니다!');
     }
+    // Filter Logic
+    const navItems = document.querySelectorAll('.nav-item');
+    const posts = document.querySelectorAll('.post-card');
+    const postsCount = document.querySelector('.content-header h2');
+
+    navItems.forEach(item => {
+        item.addEventListener('click', () => {
+            // Update active state
+            navItems.forEach(nav => nav.classList.remove('active'));
+            item.classList.add('active');
+
+            const category = item.getAttribute('data-category');
+            let visibleCount = 0;
+
+            posts.forEach(post => {
+                const postCategory = post.getAttribute('data-category');
+
+                if (category === 'all' || category === postCategory) {
+                    post.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    post.style.display = 'none';
+                }
+            });
+
+            // Update count text
+            postsCount.textContent = `${visibleCount} 개의 게시물`;
+        });
+    });
 });
