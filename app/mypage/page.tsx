@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import Header from '@/components/Header';
 import Navigation from '@/components/Navigation';
 import PostCard from '@/components/PostCard';
+import EditProfileModal from '@/components/EditProfileModal';
 
 export default function MyPage() {
     const { user, loading } = useAuth();
@@ -24,6 +25,8 @@ export default function MyPage() {
             fetchMyPosts();
         }
     }, [user]);
+
+    const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
 
     const fetchMyPosts = async () => {
         try {
@@ -75,7 +78,7 @@ export default function MyPage() {
                     </div>
 
                     <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem' }}>
-                        <button className="btn btn-outline">정보 수정</button>
+                        <button className="btn btn-outline" onClick={() => setIsEditProfileOpen(true)}>정보 수정</button>
                         <button className="btn btn-outline" onClick={() => router.push('/messages')}>쪽지함</button>
                     </div>
                 </div>
@@ -90,6 +93,7 @@ export default function MyPage() {
                     myPosts.map(post => <PostCard key={post.id} post={post} />)
                 )}
             </main>
+            <EditProfileModal isOpen={isEditProfileOpen} onClose={() => setIsEditProfileOpen(false)} user={user} onUpdate={() => window.location.reload()} />
         </>
     );
 }

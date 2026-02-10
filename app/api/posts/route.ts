@@ -83,7 +83,9 @@ export async function POST(request: Request) {
         if (file) {
             try {
                 const buffer = await file.arrayBuffer();
-                const filename = `posts/${Date.now()}_${file.name.replaceAll(' ', '_')}`;
+                const sanitizedFileName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+                const filename = `posts/${Date.now()}_${sanitizedFileName}`;
+                console.log(`[API] Uploading file: ${filename}`);
 
                 const { data, error } = await supabase.storage
                     .from('uploads')
@@ -93,15 +95,17 @@ export async function POST(request: Request) {
                     });
 
                 if (error) {
-                    console.error('Supabase upload error:', error);
+                    console.error('[API] Supabase upload error:', error);
                 } else {
+                    console.log('[API] Upload successful:', data);
                     const { data: { publicUrl } } = supabase.storage
                         .from('uploads')
                         .getPublicUrl(filename);
                     imageUrl = publicUrl;
+                    console.log(`[API] Generated Public URL: ${imageUrl}`);
                 }
             } catch (error) {
-                console.error('Error saving file:', error);
+                console.error('[API] Error saving file:', error);
             }
         }
 
