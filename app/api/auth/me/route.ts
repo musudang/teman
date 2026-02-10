@@ -52,48 +52,50 @@ export async function GET() {
             { status: 500 }
         );
     }
-    export async function PUT(request: Request) {
-        const cookieStore = await cookies();
-        const token = cookieStore.get('token')?.value;
+}
 
-        if (!token) {
-            return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
-        }
+export async function PUT(request: Request) {
+    const cookieStore = await cookies();
+    const token = cookieStore.get('token')?.value;
 
-        const payload = await verifyToken(token);
-
-        if (!payload || !payload.userId) {
-            return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
-        }
-
-        try {
-            const body = await request.json();
-            const { nickname, nationality, age, gender, profileImage } = body;
-
-            const updatedUser = await prisma.user.update({
-                where: { id: payload.userId as string },
-                data: {
-                    nickname,
-                    nationality,
-                    age,
-                    gender,
-                    profileImage,
-                },
-                select: {
-                    id: true,
-                    email: true,
-                    nickname: true,
-                    nationality: true,
-                    age: true,
-                    gender: true,
-                    profileImage: true,
-                    role: true,
-                },
-            });
-
-            return NextResponse.json({ user: updatedUser }, { status: 200 });
-        } catch (error) {
-            console.error('Profile update error:', error);
-            return NextResponse.json({ error: 'Failed to update profile' }, { status: 500 });
-        }
+    if (!token) {
+        return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
     }
+
+    const payload = await verifyToken(token);
+
+    if (!payload || !payload.userId) {
+        return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
+    }
+
+    try {
+        const body = await request.json();
+        const { nickname, nationality, age, gender, profileImage } = body;
+
+        const updatedUser = await prisma.user.update({
+            where: { id: payload.userId as string },
+            data: {
+                nickname,
+                nationality,
+                age,
+                gender,
+                profileImage,
+            },
+            select: {
+                id: true,
+                email: true,
+                nickname: true,
+                nationality: true,
+                age: true,
+                gender: true,
+                profileImage: true,
+                role: true,
+            },
+        });
+
+        return NextResponse.json({ user: updatedUser }, { status: 200 });
+    } catch (error) {
+        console.error('Profile update error:', error);
+        return NextResponse.json({ error: 'Failed to update profile' }, { status: 500 });
+    }
+}
