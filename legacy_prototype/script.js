@@ -351,6 +351,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!text || !currentMeetingId) return;
 
         const meeting = meetings.find(m => m.id === currentMeetingId);
+
+        if (!meeting.joined) {
+            alert("모임에 참여해야 채팅을 할 수 있습니다.");
+            return;
+        }
+
         meeting.chat.push({ user: 'Me', text: text, isMe: true });
 
         renderChat(meeting);
